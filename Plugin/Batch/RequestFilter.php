@@ -36,8 +36,9 @@ class RequestFilter implements IPlugin
 		{
 			// 过滤当前访问文件
 			$path = $_SERVER['HTTP_HOST'] . str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
-			$requestUrl = $uri['host'] . (isset($uri['port']) ? (':' . $uri['port']) : '') . (isset($uri['path']) ? ($uri['path'] . '/') : '');
-			if(substr($requestUrl, 0, strlen($path)) === $path)
+			$path2 = $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
+			$requestUrl = $uri['host'] . (isset($uri['port']) ? (':' . $uri['port']) : '') . (isset($uri['path']) ? $uri['path'] : '');
+			if($path === $requestUrl || $path2 === $requestUrl)
 			{
 				exit(json_encode(array(
 					'success'	=>	false,

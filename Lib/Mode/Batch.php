@@ -6,7 +6,7 @@ use Yurun\Until\HttpRequest;
 
 class Batch extends Base
 {
-	public $options, $apis = array(), $result, $dataResult;
+	public $options, $result, $dataResult;
 
 	/**
 	 * 发送请求
@@ -16,6 +16,13 @@ class Batch extends Base
 	{
 		$this->checkOrigin();
 		$this->options = json_decode(file_get_contents('php://input'), true);
+		if(!is_array($this->options))
+		{
+			exit(json_encode(array(
+				'success'	=>	false,
+				'message'	=>	'参数不正确',
+			)));
+		}
 		$this->result = array(
 			'success'	=>	true,
 			'data'		=>	array(
@@ -31,10 +38,10 @@ class Batch extends Base
 				$this->result['data'][$name] = "{$name}.url 不存在";
 				break;
 			}
-			if(isset($this->apis[$option['url']]))
+			if(isset($this->config['apis'][$option['url']]))
 			{
-				$option = array_merge($this->apis[$option['url']], $option);
-				$option['url'] = $this->apis[$option['url']]['url'];
+				$option = array_merge($this->config['apis'][$option['url']], $option);
+				$option['url'] = $this->config['apis'][$option['url']]['url'];
 			}
 			if(!$this->parseOptionItem($name, $option))
 			{
@@ -48,6 +55,7 @@ class Batch extends Base
 
 	private function checkOrigin()
 	{
+		header('Access-Control-Allow-Credentials: true');
 		if($this->config['allow_all_origin'])
 		{
 			header('Access-Control-Allow-Origin:*');
@@ -70,11 +78,19 @@ class Batch extends Base
 	{
 		$method = isset($option['method']) ? strtolower($option['method']) : 'get';
 		$dataType = isset($option['dataType']) ? $option['dataType'] : 'form';
-		$url = $this->buildUrl($this->parseRule($option['url']), isset($option['getData']) ? $this->parseData($option['getData']) : array());
+		$url = $this->buildUrl($this->parseRule($option['url']), isset($option['getData']) ? $this->parseData('', $option['getData']) : array());
 		$postData = isset($option['postData']) ? $this->parseData($dataType, $option['postData']) : array();
 		Event::trigger('BATCH_BEFORE_SEND', array('handler'=>$this, 'method'=>$method, 'dataType'=>$dataType, 'url'=>$url, 'postData'=>$postData));
 		$http = HttpRequest::newSession();
 		$result = $http->$method($url, $postData);
+		if(!empty($result->cookies))
+		{
+			// cookie原样返回
+			foreach($result->cookies as $name => $item)
+			{
+				setcookie($name, $item['value'], $_SERVER['REQUEST_TIME'] + $this->config['cookie_expire'], '/');
+			}
+		}
 		$this->dataResult[] = $result->body;
 		$data = json_decode($result->body, true);
 		if(is_array($data))
