@@ -8,6 +8,7 @@ class Cross extends Base
 {
 	public function run()
 	{
+		header('Access-Control-Allow-Origin:*');
 		$url = $this->getUrl();
 		$method = $this->getMethod();
 		$headers = $this->getHeaders();
@@ -29,7 +30,6 @@ class Cross extends Base
 				header("{$name}:{$header}", false);
 			}
 		}
-		header('Access-Control-Allow-Origin:*');
 		Event::trigger('CROSS_ECHO_CONTENT_BEFORE', array('handler'=>$this,'response'=>$response));
 		echo $response->body;
 	}

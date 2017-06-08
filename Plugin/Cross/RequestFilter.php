@@ -1,5 +1,5 @@
 <?php
-namespace Yurun\ApiAgent\Plugin\Batch;
+namespace Yurun\ApiAgent\Plugin\Cross;
 
 use Yurun\ApiAgent\IPlugin;
 use Yurun\Until\Event;
@@ -8,10 +8,10 @@ class RequestFilter implements IPlugin
 {
 	public function init()
 	{
-		Event::on('BATCH_BEFORE_SEND', array($this, 'parseBeforeSend'));
+		Event::on('CROSS_GET_URL', array($this, 'parseGetUrl'));
 	}
 
-	public function parseBeforeSend($params)
+	public function parseGetUrl($params)
 	{
 		$uri = parse_url($params['url']);
 		if(!isset($uri['scheme'], $uri['host']))
