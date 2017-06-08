@@ -1,0 +1,23 @@
+{
+	"name": "yurunsoft/api-agent",
+	"type": "project",
+    "autoload": {
+        "psr-4": {
+            "Yurun\\ApiAgent\\": "Lib/",
+            "Yurun\\ApiAgent\\Plugin\\": "Plugin/"
+        }
+    },
+    "require": {
+		"yurunsoft/yurun-http": "dev-master",
+		"yurunsoft/yurun-event": "dev-master"
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    }
+}
