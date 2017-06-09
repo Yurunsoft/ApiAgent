@@ -4,6 +4,14 @@
 
 API接口代理，支持跨域接口代理和接口合并请求功能。
 
+## composer安装命令
+
+~~~
+composer install
+~~~
+
+中国用户如果使用composer很卡，请查看：https://pkg.phpcomposer.com/
+
 ## 跨域接口代理
 
 通过`index.php`文件访问，默认参数为`url`，注意需要`urlencode`编码。
