@@ -1,6 +1,7 @@
 <?php
 namespace Yurun\ApiAgent\Mode;
 
+use Yurun\ApiAgent\ApiAgent;
 use Yurun\Until\Event;
 use Yurun\Until\HttpRequest;
 
@@ -58,7 +59,10 @@ class Batch extends Base
 		header('Access-Control-Allow-Credentials: true');
 		if($this->config['allow_all_origin'])
 		{
-			header('Access-Control-Allow-Origin:*');
+			if(isset($_SERVER['HTTP_ORIGIN']))
+			{
+				header('Access-Control-Allow-Origin:' . $_SERVER['HTTP_ORIGIN']);
+			}
 		}
 		else if(isset($_SERVER['HTTP_ORIGIN']))
 		{
