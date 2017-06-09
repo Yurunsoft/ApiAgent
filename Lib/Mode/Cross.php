@@ -1,6 +1,7 @@
 <?php
 namespace Yurun\ApiAgent\Mode;
 
+use Yurun\ApiAgent\ApiAgent;
 use Yurun\Until\Event;
 use Yurun\Until\HttpRequest;
 
@@ -15,7 +16,9 @@ class Cross extends Base
 		$requestBody = $this->getRequestBody();
 		$http = HttpRequest::newSession();
 		$response = $http->headers($headers)
+						 ->timeout(ApiAgent::$config['http_timeout'])
 						 ->$method($url, $requestBody);
+		header('Status: ' . $response->httpCode());
 		foreach($response->headers as $name => $header)
 		{
 			if(is_array($header))

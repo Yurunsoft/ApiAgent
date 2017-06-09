@@ -86,7 +86,8 @@ class Batch extends Base
 		$postData = isset($option['postData']) ? $this->parseData($dataType, $option['postData']) : array();
 		Event::trigger('BATCH_BEFORE_SEND', array('handler'=>$this, 'method'=>$method, 'dataType'=>$dataType, 'url'=>$url, 'postData'=>$postData));
 		$http = HttpRequest::newSession();
-		$result = $http->$method($url, $postData);
+		$result = $http->timeout(ApiAgent::$config['http_timeout'])
+					   ->$method($url, $postData);
 		if(!empty($result->cookies))
 		{
 			// cookie原样返回
