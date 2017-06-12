@@ -9,6 +9,6 @@ return array(
 	'temp_dir'	=>	'',
 	// 使用自定义实现的重定向，性能较差。如果不是环境不支持自动重定向，请勿设为true
 	'http_custom_location'	=>	false,
-	// http请求超时时间，单位：秒
-	'http_timeout'	=>	10,
+	// http请求超时时间，单位：毫秒
+	'http_timeout'	=>	10000,
 );
