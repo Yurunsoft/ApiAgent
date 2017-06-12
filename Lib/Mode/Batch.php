@@ -91,9 +91,9 @@ class Batch extends Base
 		if(!empty($result->cookies))
 		{
 			// cookie原样返回
-			foreach($result->cookies as $name => $item)
+			foreach($result->cookies as $cookieName => $item)
 			{
-				setcookie($name, $item['value'], $_SERVER['REQUEST_TIME'] + $this->config['cookie_expire'], '/');
+				setcookie($cookieName, $item['value'], $_SERVER['REQUEST_TIME'] + $this->config['cookie_expire'], '/');
 			}
 		}
 		$this->dataResult[] = $result->body;
