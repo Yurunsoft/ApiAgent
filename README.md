@@ -93,6 +93,8 @@ $.ajax({
 | true | true === $value |
 | false | false === $value |
 
+> 除了预定义规则，你还可以编写正则来验证。如：\d+
+
 ## dataType数据类型
 
 | 名称 | 含义 |
