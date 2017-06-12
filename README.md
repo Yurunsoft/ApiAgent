@@ -18,6 +18,8 @@ composer install
 
 例子：`http://apiagent.toolapi.net/?url=http://www.baidu.com`
 
+> （上面是在线演示地址，随时可能崩掉，正式使用时请改成你自己的！）
+
 该接口原样返回状态码、返回头（包括cookie）、返回内容。
 
 配置文件：`Config/cross.php`
@@ -38,7 +40,7 @@ $.ajaxSetup({
 	},
 });
 $.ajax({
-	// 请求地址，改成你自己的
+	// 在线演示地址，随时可能崩掉，正式使用时请改成你自己的
 	url: 'http://apiagent.toolapi.net/batch.php',
 	method: 'post',
 	data: JSON.stringify({
@@ -48,7 +50,7 @@ $.ajax({
 		},*/
 		aip: {
 			url: 'http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json',
-			getData: {ip: '218.4.255.255'},
+			getData: {ip: '218.4.255.255'}, // 这里的IP改变也会改变下面baike的结果哦
 		},
 		// weather2是错误的结果，会中断
 		/*weather2: {
