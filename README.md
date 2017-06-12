@@ -16,7 +16,7 @@ composer install
 
 通过`index.php`文件访问，默认参数为`url`，注意需要`urlencode`编码。
 
-例子：`http://localhost:2400/?url=http://www.baidu.com`
+例子：`http://apiagent.toolapi.net/?url=http://www.baidu.com`
 
 该接口原样返回状态码、返回头（包括cookie）、返回内容。
 
@@ -39,27 +39,25 @@ $.ajaxSetup({
 });
 $.ajax({
 	// 请求地址，改成你自己的
-	url: 'http://localhost:2400/batch.php',
+	url: 'http://apiagent.toolapi.net/batch.php',
 	method: 'post',
 	data: JSON.stringify({
-		aip: {
+		/*aip: {
 			url: 'ip', // 在apis中预定义的接口，传别名即可
 			getData: {ip: '218.4.255.255'},
+		},*/
+		aip: {
+			url: 'http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json',
+			getData: {ip: '218.4.255.255'},
 		},
-		weather: {
-			url: 'http://www.weather.com.cn/data/sk/101010100.html',
-			condition: {
-				value: '{$weather.weatherinfo}',
-				regular: 'is not null', // 验证规则，可以是预定义规则，也可以是正则
-			},
-		},
-		weather2: {
+		// weather2是错误的结果，会中断
+		/*weather2: {
 			url: 'http://www.weather.com.cn/data/sk/1010101001.html',
 			condition: { // 返回结果.weatherinfo不为null
 				value: '{$weather2.weatherinfo}',
 				regular: 'is not null',
 			},
-		},
+		},*/
 		baike: {
 			url: 'http://baike.baidu.com/api/openapi/BaikeLemmaCardApi?scope=103&format=json&appid=379020&bk_length=600',
 			// get参数
