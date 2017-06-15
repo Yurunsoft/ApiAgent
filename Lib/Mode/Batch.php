@@ -7,11 +7,26 @@ use Yurun\Until\HttpRequest;
 
 class Batch extends Base
 {
-	public $options, $result, $dataResult;
+	/**
+	 * 请求数据，规则数组
+	 * @var array
+	 */
+	public $options;
 
 	/**
-	 * 发送请求
-	 * @return array 
+	 * 返回结果数组
+	 * @var array
+	 */
+	public $result;
+
+	/**
+	 * 保存接口返回数据的数组
+	 * @var array
+	 */
+	public $dataResult;
+
+	/**
+	 * 运行
 	 */
 	public function run()
 	{
@@ -54,6 +69,9 @@ class Batch extends Base
 		echo json_encode($this->result);
 	}
 
+	/**
+	 * 检查处理跨域
+	 */
 	private function checkOrigin()
 	{
 		header('Access-Control-Allow-Credentials: true');
@@ -78,6 +96,12 @@ class Batch extends Base
 		Event::trigger('BATCH_CHECK_ORIGIN', array('handler'=>$this));
 	}
 
+	/**
+	 * 处理接口项
+	 * @param string $name 
+	 * @param array $option 
+	 * @return bool 
+	 */
 	private function parseOptionItem($name, $option)
 	{
 		$method = isset($option['method']) ? strtolower($option['method']) : 'get';
@@ -109,6 +133,12 @@ class Batch extends Base
 		return $this->checkResult($name, $option);
 	}
 
+	/**
+	 * 处理接口调用结果
+	 * @param string $name 
+	 * @param array $option 
+	 * @return bool 
+	 */
 	private function checkResult($name, $option)
 	{
 		if(!isset($option['condition']))
@@ -126,6 +156,12 @@ class Batch extends Base
 		return $this->checkByRegulars($option['condition']['value'], isset($option['condition']['regular']) ? $option['condition']['regular'] : '');
 	}
 
+	/**
+	 * 根据正则或者预定义规则检查结果
+	 * @param mixed $value 
+	 * @param string $regular 
+	 * @return bool 
+	 */
 	private function checkByRegulars($value, $regular)
 	{
 		switch($regular)
@@ -146,6 +182,12 @@ class Batch extends Base
 		return is_scalar($value) && preg_match('/' . $regular . '/', $value) > 0;
 	}
 
+	/**
+	 * 处理GET/POST数据
+	 * @param string $dataType 
+	 * @param array $data 
+	 * @return array 
+	 */
 	private function parseData($dataType, $data)
 	{
 		foreach($data as $index => $item)
@@ -162,6 +204,11 @@ class Batch extends Base
 		return $data;
 	}
 
+	/**
+	 * 处理GET/POST数据里的变量（之前请求数据代入）
+	 * @param string $rule 
+	 * @return string 
+	 */
 	private function parseRule($rule)
 	{
 		$rules = $this->getRules($rule);
@@ -172,12 +219,23 @@ class Batch extends Base
 		return $rule;
 	}
 
+	/**
+	 * 获取GET/POST数据里的变量规则
+	 * @param string $rule 
+	 * @return array 
+	 */
 	private function getRules($rule)
 	{
 		preg_match_all('/{([^}]+)}/', $rule, $matches);
 		return $matches;
 	}
 
+	/**
+	 * 根据变量规则获取值
+	 * @param string $rule 
+	 * @param bool $exists 
+	 * @return mixed 
+	 */
 	private function getValueByRule($rule, &$exists = true)
 	{
 		$list = explode('.', preg_replace('/\[([^\]]+)\]/', '.\1', $rule));

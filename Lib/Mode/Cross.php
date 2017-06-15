@@ -7,6 +7,9 @@ use Yurun\Until\HttpRequest;
 
 class Cross extends Base
 {
+	/**
+	 * 运行
+	 */
 	public function run()
 	{
 		header('Access-Control-Allow-Origin:*');
@@ -37,6 +40,10 @@ class Cross extends Base
 		echo $response->body;
 	}
 	
+	/**
+	 * 获取请求url地址
+	 * @return string 
+	 */
 	public function getUrl()
 	{
 		$url = isset($_GET[$this->config['param_url']]) ? $_GET[$this->config['param_url']] : null;
@@ -44,6 +51,10 @@ class Cross extends Base
 		return $url;
 	}
 
+	/**
+	 * 获取请求header头
+	 * @return array 
+	 */
 	public function getHeaders()
 	{
 		$headers = getallheaders();
@@ -55,6 +66,10 @@ class Cross extends Base
 		return $headers;
 	}
 
+	/**
+	 * 获取请求内容
+	 * @return array 
+	 */
 	public function getRequestBody()
 	{
 		$requestBody = file_get_contents('php://input');
@@ -62,6 +77,10 @@ class Cross extends Base
 		return $requestBody;
 	}
 
+	/**
+	 * 获取请求方式
+	 * @return string 
+	 */
 	public function getMethod()
 	{
 		$method = $_SERVER['REQUEST_METHOD'];
