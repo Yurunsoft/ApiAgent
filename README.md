@@ -85,7 +85,7 @@ $.ajax({
 ## 预定义验证规则
 
 | 代码 | 含义 |
-| - | - |
+| --- | --- |
 | is null | null === $value |
 | is not null | null !== $value |
 | empty array | 0 === count($value[0]) |
@@ -98,6 +98,6 @@ $.ajax({
 ## dataType数据类型
 
 | 名称 | 含义 |
-| - | - |
+| --- | --- |
 | form | 表单参数格式(如：a=1&b=2)，默认 |
 | json | 转为json格式提交 |
