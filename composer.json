@@ -8,8 +8,8 @@
         }
     },
     "require": {
-		"yurunsoft/yurun-http": "dev-master",
-		"yurunsoft/yurun-event": "dev-master"
+		"yurunsoft/yurun-http": "1.3.*",
+		"yurunsoft/yurun-event": "1.1.*"
     },
     "config": {
         "preferred-install": "dist"
