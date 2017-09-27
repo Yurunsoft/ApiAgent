@@ -5,7 +5,10 @@
         "psr-4": {
             "Yurun\\ApiAgent\\": "Lib/",
             "Yurun\\ApiAgent\\Plugin\\": "Plugin/"
-        }
+        },
+        "files":[
+            "Lib/functions.php"
+        ]
     },
     "require": {
 		"yurunsoft/yurun-http": "1.3.*",

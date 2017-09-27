@@ -8,11 +8,12 @@ abstract class Base
 {
 	/**
 	 * 模式配置
+	 * @param $modeConfig 模式配置，为空则读取配置文件
 	 * @var array
 	 */
 	public $config;
 
-	public function __construct()
+	public function __construct($modeConfig = null)
 	{
 		$className = get_called_class();
 		if ($pos = strrpos($className, '\\'))
@@ -24,7 +25,14 @@ abstract class Base
 			$className =  $pos;
 		}
 		// 加载模式配置
-		$this->config = include ROOT_PATH . 'Config/' . strtolower($className) . '.php';
+		if(null === $modeConfig)
+		{
+			$this->config = include API_AGENT_ROOT_PATH . 'Config/' . strtolower($className) . '.php';
+		}
+		else
+		{
+			$this->config = $modeConfig;
+		}
 	}
 
 	/**
