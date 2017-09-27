@@ -24,4 +24,11 @@ return array(
 	),
 	// 接口返回的cookie有效期，单位：秒
 	'cookie_expire'	=>	86400,
+	// 过滤请求header
+	'request_header_filter'	=>	array(
+		'connection',
+		'transfer-encoding',
+		'content-length',
+		'keep-alive',
+	),
 );

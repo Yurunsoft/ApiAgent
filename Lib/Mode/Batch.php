@@ -110,7 +110,20 @@ class Batch extends Base
 		$postData = isset($option['postData']) ? $this->parseData($dataType, $option['postData']) : array();
 		Event::trigger('BATCH_BEFORE_SEND', array('handler'=>$this, 'method'=>$method, 'dataType'=>$dataType, 'url'=>$url, 'postData'=>$postData));
 		$http = HttpRequest::newSession();
-		$result = $http->timeout(ApiAgent::$config['http_timeout'])
+		if(empty($option['header']))
+		{
+			$headers = $option['header'];
+		}
+		else
+		{
+			$headers = getallheaders();
+			foreach($this->config['response_headers_filter'] as $filter)
+			{
+				unset($headers[$filter]);
+			}
+		}
+		$result = $http->headers($headers)
+					   ->timeout(ApiAgent::$config['http_timeout'])
 					   ->$method($url, $postData);
 		if(!empty($result->cookies))
 		{
