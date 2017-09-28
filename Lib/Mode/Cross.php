@@ -18,6 +18,10 @@ class Cross extends Base
 		$headers = $this->getHeaders();
 		$requestBody = $this->getRequestBody();
 		$http = HttpRequest::newSession();
+		if(isset($headers['Accept-Encoding']))
+		{
+			$http->option(CURLOPT_ENCODING, $headers['Accept-Encoding']);
+		}
 		$response = $http->headers($headers)
 						 ->timeout(ApiAgent::$config['http_timeout'])
 						 ->$method($url, $requestBody);

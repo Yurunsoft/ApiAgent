@@ -123,6 +123,10 @@ class Batch extends Base
 		{
 			$headers = $option['header'];
 		}
+		if(isset($headers['Accept-Encoding']))
+		{
+			$http->option(CURLOPT_ENCODING, $headers['Accept-Encoding']);
+		}
 		$result = $http->headers($headers)
 					   ->timeout(ApiAgent::$config['http_timeout'])
 					   ->$method($url, $postData);
