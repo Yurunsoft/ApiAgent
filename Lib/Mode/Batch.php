@@ -41,8 +41,8 @@ class Batch extends Base
 		}
 		$this->result = array(
 			'success'	=>	true,
+			'message'	=>	'',
 			'data'		=>	array(),
-			'error'		=>	array(),
 			'header'	=>	array(),
 		);
 		$this->dataResult = array();
@@ -64,6 +64,10 @@ class Batch extends Base
 			{
 				$this->result['success'] = false;
 				$this->result['break'] = $name;
+				if('' === $this->result['message'])
+				{
+					$this->result['message'] = $name . ' 验证失败';
+				}
 				break;
 			}
 		}
@@ -154,7 +158,8 @@ class Batch extends Base
 		}
 		else
 		{
-			$this->result['error'] = array('key'=>$name, 'error'=>$result->error());
+			$this->result['error_key'] = $name;
+			$this->result['message'] = $result->error();
 			return false;
 		}
 		return $this->checkResult($name, $option);
