@@ -45,7 +45,7 @@ class Batch extends Base
 			'success'	=>	true,
 			'message'	=>	'',
 			'data'		=>	array(),
-			'header'	=>	array(),
+			'result'	=>	array(),
 		);
 		$this->dataResult = array();
 		foreach($this->options as $name => $option)
@@ -156,8 +156,8 @@ class Batch extends Base
 					setcookie($cookieName, $item['value'], $_SERVER['REQUEST_TIME'] + $this->config['cookie_expire'], '/');
 				}
 			}
-			$this->result['header'][$name] = $result->headers;
-			$this->result['status_code'][$name] = $result->httpCode();
+			$this->result['result'][$name]['status_code'] = $result->httpCode();
+			$this->result['result'][$name]['header'] = $result->headers;
 		}
 		else
 		{
