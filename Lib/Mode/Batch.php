@@ -150,7 +150,7 @@ class Batch extends Base
 		}
 		else
 		{
-			$this->result['error'][$name] = $result->error();
+			$this->result['error'] = array('key'=>$name, 'error'=>$result->error());
 			return false;
 		}
 		return $this->checkResult($name, $option);
