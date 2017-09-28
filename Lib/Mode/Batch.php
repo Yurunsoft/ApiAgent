@@ -41,8 +41,8 @@ class Batch extends Base
 		}
 		$this->result = array(
 			'success'	=>	true,
-			'data'		=>	array(
-			),
+			'data'		=>	array(),
+			'error'		=>	array(),
 		);
 		$this->dataResult = array();
 		foreach($this->options as $name => $option)
@@ -112,27 +112,19 @@ class Batch extends Base
 		$http = HttpRequest::newSession();
 		if(empty($option['header']))
 		{
-			$headers = $option['header'];
-		}
-		else
-		{
 			$headers = getallheaders();
-			foreach($this->config['response_headers_filter'] as $filter)
+			foreach($this->config['request_header_filter'] as $filter)
 			{
 				unset($headers[$filter]);
 			}
 		}
+		else
+		{
+			$headers = $option['header'];
+		}
 		$result = $http->headers($headers)
 					   ->timeout(ApiAgent::$config['http_timeout'])
 					   ->$method($url, $postData);
-		if(!empty($result->cookies))
-		{
-			// cookie原样返回
-			foreach($result->cookies as $cookieName => $item)
-			{
-				setcookie($cookieName, $item['value'], $_SERVER['REQUEST_TIME'] + $this->config['cookie_expire'], '/');
-			}
-		}
 		$this->dataResult[] = $result->body;
 		$data = json_decode($result->body, true);
 		if(is_array($data))
@@ -142,6 +134,22 @@ class Batch extends Base
 		else
 		{
 			$this->result['data'][$name] = $result->body;
+		}
+		if($result->success)
+		{
+			if(!empty($result->cookies))
+			{
+				// cookie原样返回
+				foreach($result->cookies as $cookieName => $item)
+				{
+					setcookie($cookieName, $item['value'], $_SERVER['REQUEST_TIME'] + $this->config['cookie_expire'], '/');
+				}
+			}
+		}
+		else
+		{
+			$this->result['error'][$name] = $result->error();
+			return false;
 		}
 		return $this->checkResult($name, $option);
 	}

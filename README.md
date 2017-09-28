@@ -70,6 +70,11 @@ $.ajax({
 			postData: {},
 			// 数据类型
 			dataType: 'form',
+			// 自定义header，不定义则使用默认
+			header: {
+				'test': 'aaa',
+			},
+			// 验证返回结果是否正确，不正确会中断请求并返回
 			condition: {
 				value: '{$baike.errno}',
 				regular: 'is not null',

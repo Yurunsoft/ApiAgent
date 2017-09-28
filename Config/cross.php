@@ -4,10 +4,11 @@ return array(
 	'param_url'	=>	'url',
 	// 过滤请求header
 	'request_header_filter'	=>	array(
-		'connection',
-		'transfer-encoding',
-		'content-length',
-		'keep-alive',
+		'Connection',
+		'Transfer-Encoding',
+		'Content-Length',
+		'Keep-Alive',
+		'Host',
 	),
 	// 过滤返回header
 	'response_headers_filter'	=>	array(

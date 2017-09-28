@@ -26,9 +26,10 @@ return array(
 	'cookie_expire'	=>	86400,
 	// 过滤请求header
 	'request_header_filter'	=>	array(
-		'connection',
-		'transfer-encoding',
-		'content-length',
-		'keep-alive',
+		'Connection',
+		'Transfer-Encoding',
+		'Content-Length',
+		'Keep-Alive',
+		'Host',
 	),
 );
