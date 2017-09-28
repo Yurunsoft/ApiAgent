@@ -15,6 +15,8 @@ abstract class Base
 
 	public function __construct($modeConfig = null)
 	{
+		// 开启智能压缩
+		ob_start('ob_gzhandler');
 		$className = get_called_class();
 		if ($pos = strrpos($className, '\\'))
 		{
