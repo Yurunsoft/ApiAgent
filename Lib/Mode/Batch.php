@@ -157,6 +157,7 @@ class Batch extends Base
 				}
 			}
 			$this->result['header'][$name] = $result->headers;
+			$this->result['status_code'][$name] = $result->httpCode();
 		}
 		else
 		{
