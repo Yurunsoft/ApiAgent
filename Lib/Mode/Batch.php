@@ -30,6 +30,8 @@ class Batch extends Base
 	 */
 	public function run()
 	{
+		// 统一输出json格式数据
+		header('Content-type: application/json;charset=utf-8');
 		$this->checkOrigin();
 		$this->options = json_decode(file_get_contents('php://input'), true);
 		if(!is_array($this->options))
