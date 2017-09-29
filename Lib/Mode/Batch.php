@@ -20,12 +20,6 @@ class Batch extends Base
 	public $result;
 
 	/**
-	 * 保存接口返回数据的数组
-	 * @var array
-	 */
-	public $dataResult;
-
-	/**
 	 * 运行
 	 */
 	public function run()
@@ -47,7 +41,6 @@ class Batch extends Base
 			'data'		=>	array(),
 			'result'	=>	array(),
 		);
-		$this->dataResult = array();
 		foreach($this->options as $name => $option)
 		{
 			if(!isset($option['url']))
@@ -136,18 +129,17 @@ class Batch extends Base
 		$result = $http->headers($headers)
 					   ->timeout(ApiAgent::$config['http_timeout'])
 					   ->$method($url, $postData);
-		$this->dataResult[] = $result->body;
-		$data = json_decode($result->body, true);
-		if(is_array($data))
-		{
-			$this->result['data'][$name] = $data;
-		}
-		else
-		{
-			$this->result['data'][$name] = $result->body;
-		}
 		if($result->success)
 		{
+			$data = json_decode($result->body, true);
+			if(is_array($data))
+			{
+				$this->result['data'][$name] = $data;
+			}
+			else
+			{
+				$this->result['data'][$name] = $result->body;
+			}
 			if(!empty($result->cookies))
 			{
 				// cookie原样返回
