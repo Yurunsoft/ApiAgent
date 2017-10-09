@@ -109,7 +109,7 @@ class Batch extends Base
 		$bodyDataType = isset($option['bodyDataType']) ? $option['bodyDataType'] : 'form';
 		$url = $this->buildUrl($this->parseRule($option['url']), isset($option['getData']) ? $this->parseData($getDataType, $option['getData']) : array());
 		$postData = isset($option['postData']) ? $this->parseData($bodyDataType, $option['postData']) : array();
-		Event::trigger('BATCH_BEFORE_SEND', array('handler'=>$this, 'method'=>$method, 'getDataType'=>$getDataType, 'bodyDataType'=>$bodyDataType, 'url'=>$url, 'postData'=>$postData));
+		Event::trigger('BATCH_BEFORE_SEND', array('handler'=>$this, 'method'=>&$method, 'getDataType'=>&$getDataType, 'bodyDataType'=>&$bodyDataType, 'url'=>&$url, 'postData'=>&$postData));
 		$http = HttpRequest::newSession();
 		if(empty($option['header']))
 		{
