@@ -66,6 +66,7 @@ class Batch extends Base
 				break;
 			}
 		}
+		Event::trigger('BATCH_ECHO_CONTENT_BEFORE', array('handler'=>$this));
 		echo json_encode($this->result);
 	}
 

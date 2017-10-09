@@ -48,7 +48,7 @@ class Cross extends Base
 	 * 获取请求url地址
 	 * @return string 
 	 */
-	public function getUrl()
+	private function getUrl()
 	{
 		$url = isset($_GET[$this->config['param_url']]) ? $_GET[$this->config['param_url']] : null;
 		Event::trigger('CROSS_GET_URL', array('handler'=>$this,'url'=>&$url));
@@ -59,7 +59,7 @@ class Cross extends Base
 	 * 获取请求header头
 	 * @return array 
 	 */
-	public function getHeaders()
+	private function getHeaders()
 	{
 		$headers = getallheaders();
 		Event::trigger('CROSS_GET_HEADERS', array('handler'=>$this,'headers'=>&$headers));
@@ -74,7 +74,7 @@ class Cross extends Base
 	 * 获取请求内容
 	 * @return array 
 	 */
-	public function getRequestBody()
+	private function getRequestBody()
 	{
 		$requestBody = file_get_contents('php://input');
 		Event::trigger('CROSS_GET_REQUEST_BODY', array('handler'=>$this,'requestBody'=>&$requestBody));
@@ -85,7 +85,7 @@ class Cross extends Base
 	 * 获取请求方式
 	 * @return string 
 	 */
-	public function getMethod()
+	private function getMethod()
 	{
 		$method = $_SERVER['REQUEST_METHOD'];
 		Event::trigger('CROSS_GET_METHOD', array('handler'=>$this,'method'=>&$method));

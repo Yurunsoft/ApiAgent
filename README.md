@@ -68,8 +68,10 @@ $.ajax({
 			},
 			// post参数
 			postData: {},
-			// 数据类型
-			dataType: 'form',
+			// GET请求数据类型
+			getDataType: 'form',
+			// POST请求数据类型
+			bodyDataType: 'form',
 			// 自定义header，不定义则使用默认
 			header: {
 				'test': 'aaa',
@@ -94,25 +96,31 @@ $.ajax({
 	// 是否成功
     "success": true,
 	// 错误信息
-	"message": "错误信息",
+    "message": "",
 	// 返回正文数据
     "data": {
-		// 键名=>返回正文内容
-        "test": "aaa"
+        "test": ""
     },
-	// 出错的键名
-    "error_key": "",
-	// 返回头数据
-    "header": {
+	// 返回结果
+    "result": {
 		// 键名=>返回头数据
         "test": {
-            "Content-Type": "text/html",
-            "Content-Length": "14613",
+			// 状态码
+            "status_code": 208,
+			// 返回头
+            "header": {
+                "Server": "squid/3.5.20",
+                "Date": "Mon, 09 Oct 2017 07:38:54 GMT",
+                "Content-Type": "application/octet-stream",
+                "Content-Length": "0",
+                "Connection": "keep-alive"
+            },
+			// 请求耗时
+            "time": 0.047
         }
     }
 }
 ```
-
 
 ### 预定义验证规则
 
@@ -133,3 +141,4 @@ $.ajax({
 | --- | --- |
 | form | 表单参数格式(如：a=1&b=2)，默认 |
 | json | 转为json格式提交 |
+> 不传默认为form，其它名称不对传递来的参数做任何处理

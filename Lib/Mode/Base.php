@@ -8,11 +8,14 @@ abstract class Base
 {
 	/**
 	 * 模式配置
-	 * @param $modeConfig 模式配置，为空则读取配置文件
 	 * @var array
 	 */
 	public $config;
 
+	/**
+	 * 构造方法
+	 * @param array $modeConfig 模式配置，为空则读取配置文件
+	 */
 	public function __construct($modeConfig = null)
 	{
 		// 开启智能压缩
