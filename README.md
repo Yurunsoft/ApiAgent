@@ -4,13 +4,29 @@
 
 API接口代理，支持跨域接口代理和接口合并请求功能。
 
-## composer安装命令
+## [在线文档](http://doc.yurunsoft.com/YurunHttp "在线文档")
 
-~~~
+## 安装
+
+### 当作类库使用
+
+在您的composer.json中加入配置：
+
+```json
+{
+    "require": {
+        "yurunsoft/api-agent": "1.0.*"
+    }
+}
+```
+
+### 作为项目运行
+
+切换到ApiAgent目录下，执行下列命令：
+
+```
 composer install
-~~~
-
-中国用户如果使用composer很卡，请查看：https://pkg.phpcomposer.com/
+```
 
 ## 跨域接口代理
 
