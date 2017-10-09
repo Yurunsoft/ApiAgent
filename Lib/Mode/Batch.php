@@ -105,10 +105,11 @@ class Batch extends Base
 	private function parseOptionItem($name, $option)
 	{
 		$method = isset($option['method']) ? strtolower($option['method']) : 'get';
-		$dataType = isset($option['dataType']) ? $option['dataType'] : 'form';
-		$url = $this->buildUrl($this->parseRule($option['url']), isset($option['getData']) ? $this->parseData('', $option['getData']) : array());
-		$postData = isset($option['postData']) ? $this->parseData($dataType, $option['postData']) : array();
-		Event::trigger('BATCH_BEFORE_SEND', array('handler'=>$this, 'method'=>$method, 'dataType'=>$dataType, 'url'=>$url, 'postData'=>$postData));
+		$getDataType = isset($option['getDataType']) ? $option['getDataType'] : 'form';
+		$bodyDataType = isset($option['bodyDataType']) ? $option['bodyDataType'] : 'form';
+		$url = $this->buildUrl($this->parseRule($option['url']), isset($option['getData']) ? $this->parseData($getDataType, $option['getData']) : array());
+		$postData = isset($option['postData']) ? $this->parseData($bodyDataType, $option['postData']) : array();
+		Event::trigger('BATCH_BEFORE_SEND', array('handler'=>$this, 'method'=>$method, 'getDataType'=>$getDataType, 'bodyDataType'=>$bodyDataType, 'url'=>$url, 'postData'=>$postData));
 		$http = HttpRequest::newSession();
 		if(empty($option['header']))
 		{
@@ -217,9 +218,16 @@ class Batch extends Base
 	 */
 	private function parseData($dataType, $data)
 	{
-		foreach($data as $index => $item)
+		if(is_array($data))
 		{
-			$data[$index] = $this->parseRule($item);
+			foreach($data as $index => $item)
+			{
+				$data[$index] = $this->parseRule($item);
+			}
+		}
+		else
+		{
+			$data = $this->parseRule($data);
 		}
 		switch($dataType)
 		{
