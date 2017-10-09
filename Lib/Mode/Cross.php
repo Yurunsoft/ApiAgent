@@ -40,7 +40,7 @@ class Cross extends Base
 				header("{$name}:{$header}", false);
 			}
 		}
-		Event::trigger('CROSS_ECHO_CONTENT_BEFORE', array('handler'=>$this,'response'=>$response));
+		Event::trigger('CROSS_ECHO_CONTENT_BEFORE', array('handler'=>$this,'response'=>&$response));
 		echo $response->body;
 	}
 	
