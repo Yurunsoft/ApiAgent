@@ -151,6 +151,7 @@ class Batch extends Base
 			}
 			$this->result['result'][$name]['status_code'] = $result->httpCode();
 			$this->result['result'][$name]['header'] = $result->headers;
+			$this->result['result'][$name]['time'] = $result->totalTime();
 		}
 		else
 		{
