@@ -12,7 +12,7 @@ class ApiAgent
 	 * 版本号
 	 * @var string
 	 */
-	const VERSION = '0.0.1';
+	const VERSION = '1.0.0';
 
 	/**
 	 * 总配置
@@ -23,8 +23,8 @@ class ApiAgent
 	/**
 	 * 执行接口代理
 	 * @param string $mode 
-	 * @param $config ApiAgent配置，为空则读取配置文件
-	 * @param $modeConfig 模式配置，为空则读取配置文件
+	 * @param array $config ApiAgent配置，为空则读取配置文件
+	 * @param array $modeConfig 模式配置，为空则读取配置文件
 	 */
 	public static function run($mode, $config = null, $modeConfig = null)
 	{
