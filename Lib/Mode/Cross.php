@@ -17,6 +17,7 @@ class Cross extends Base
 		$method = $this->getMethod();
 		$headers = $this->getHeaders();
 		$requestBody = $this->getRequestBody();
+		$isReturnCookie = !isset($_GET['return_cookie']) || 1 == $_GET['return_cookie'];
 		$http = HttpRequest::newSession();
 		if(isset($headers['Accept-Encoding']))
 		{
@@ -26,6 +27,11 @@ class Cross extends Base
 						 ->timeout(ApiAgent::$config['http_timeout'])
 						 ->$method($url, $requestBody);
 		header('Status: ' . $response->httpCode());
+		// 处理是否返回cookie
+		if(!$isReturnCookie && isset($response->headers['Set-Cookie']))
+		{
+			unset($response->headers['Set-Cookie']);
+		}
 		foreach($response->headers as $name => $header)
 		{
 			if(is_array($header))
