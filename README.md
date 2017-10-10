@@ -4,7 +4,7 @@
 
 API接口代理，支持跨域接口代理和接口合并请求功能。
 
-## [在线文档](http://doc.yurunsoft.com/YurunHttp "在线文档")
+## [在线文档](http://doc.yurunsoft.com/ApiAgent "在线文档")
 
 ## 安装
 
