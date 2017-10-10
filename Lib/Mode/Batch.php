@@ -106,10 +106,10 @@ class Batch extends Base
 	private function parseOptionItem($name, $option)
 	{
 		$method = isset($option['method']) ? strtolower($option['method']) : 'get';
-		$getDataType = isset($option['getDataType']) ? $option['getDataType'] : 'form';
+		$getDataType = isset($option['getDataType']) ? $option['getDataType'] : '';
 		$bodyDataType = isset($option['bodyDataType']) ? $option['bodyDataType'] : 'form';
-		$url = $this->buildUrl($this->parseRule($option['url']), isset($option['getData']) ? $this->parseData($getDataType, $option['getData']) : array());
-		$postData = isset($option['postData']) ? $this->parseData($bodyDataType, $option['postData']) : array();
+		$url = $this->buildUrl($this->parseRule($option['url']), $getDataType, isset($option['getData']) ? $option['getData'] : array());
+		$postData = isset($option['postData']) ? $this->parsePostData($bodyDataType, $option['postData']) : array();
 		Event::trigger('BATCH_BEFORE_SEND', array('handler'=>$this, 'method'=>&$method, 'getDataType'=>&$getDataType, 'bodyDataType'=>&$bodyDataType, 'url'=>&$url, 'postData'=>&$postData));
 		$http = HttpRequest::newSession();
 		if(empty($option['header']))
@@ -206,12 +206,12 @@ class Batch extends Base
 	}
 
 	/**
-	 * 处理GET/POST数据
+	 * 处理POST数据
 	 * @param string $dataType 
 	 * @param array $data 
 	 * @return array 
 	 */
-	private function parseData($dataType, $data)
+	private function parsePostData($dataType, $data)
 	{
 		if(is_array($data))
 		{
@@ -300,11 +300,12 @@ class Batch extends Base
 
 	/**
 	 * 构造url地址
-	 * @param string $url 
-	 * @param array $params 
+	 * @param string $url url地址
+	 * @param string $dataType 数据类型；form:将a=1&b=2此类字符串转为数组
+	 * @param mixed $params 参数，可以是字符串也可以是数组
 	 * @return string 
 	 */
-	public function buildUrl($url, $params = array())
+	public function buildUrl($url, $dataType, $params = array())
 	{
 		if(empty($params))
 		{
@@ -317,6 +318,17 @@ class Batch extends Base
 		else
 		{
 			$url .= '&';
+		}
+		// 处理数据格式
+		switch($dataType)
+		{
+			case 'form':
+				parse_str($params, $params);
+				break;
+		}
+		foreach($params as $index => $item)
+		{
+			$params[$index] = $this->parseRule($item);
 		}
 		return $url . http_build_query($params);
 	}
