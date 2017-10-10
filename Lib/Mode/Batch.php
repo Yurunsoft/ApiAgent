@@ -142,16 +142,9 @@ class Batch extends Base
 			{
 				$this->result['data'][$name] = $result->body;
 			}
-			if(!empty($result->cookies))
-			{
-				// cookie原样返回
-				foreach($result->cookies as $cookieName => $item)
-				{
-					setcookie($cookieName, $item['value'], $_SERVER['REQUEST_TIME'] + $this->config['cookie_expire'], '/');
-				}
-			}
 			$this->result['result'][$name]['status_code'] = $result->httpCode();
 			$this->result['result'][$name]['header'] = $result->headers;
+			$this->result['result'][$name]['cookie'] = $result->cookies;
 			$this->result['result'][$name]['time'] = $result->totalTime();
 		}
 		else
