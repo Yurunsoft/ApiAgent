@@ -219,19 +219,18 @@ class Batch extends Base
 			{
 				$data[$index] = $this->parseRule($item);
 			}
+			switch($dataType)
+			{
+				case 'form':
+					return http_build_query($data);
+				case 'json':
+					return json_encode($data);
+			}
 		}
 		else
 		{
-			$data = $this->parseRule($data);
+			return $this->parseRule($data);
 		}
-		switch($dataType)
-		{
-			case 'form':
-				return http_build_query($data);
-			case 'json':
-				return json_encode($data);
-		}
-		return $data;
 	}
 
 	/**
