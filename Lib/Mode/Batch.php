@@ -318,12 +318,10 @@ class Batch extends Base
 		{
 			$url .= '&';
 		}
-		// 处理数据格式
-		switch($dataType)
+
+		if(!is_array($params))
 		{
-			case 'form':
-				parse_str($params, $params);
-				break;
+			parse_str($params, $params);
 		}
 		foreach($params as $index => $item)
 		{
