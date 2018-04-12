@@ -255,7 +255,7 @@ class Batch extends Base
 	 */
 	private function getRules($rule)
 	{
-		preg_match_all('/{([^}]+)}/', $rule, $matches);
+		preg_match_all('/{(\$[^}]+)}/', $rule, $matches);
 		return $matches;
 	}
 
@@ -318,7 +318,6 @@ class Batch extends Base
 		{
 			$url .= '&';
 		}
-
 		if(!is_array($params))
 		{
 			parse_str($params, $params);
